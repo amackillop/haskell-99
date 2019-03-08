@@ -140,8 +140,12 @@ range :: Int -> Int -> [Int]
 range a b = [a..b]
 
 --P23
-rnd_select xs n = do
-    gen <- newStdGen
-    return $ take n [ xs !! x | x <- randomRs (0, (length xs) - 1) gen]
+randomIntGen :: Int -> Int -> IO [Int]
+randomIntGen lo hi = randomRs (lo,hi) <$> newStdGen
 
---P24
+randSelect :: Int -> [a] -> IO [a]
+randSelect n xs = 
+    do i <- indices
+       return $ (xs !!) <$> i
+    where
+        indices = take n <$> randomIntGen 0 (length xs - 1)
