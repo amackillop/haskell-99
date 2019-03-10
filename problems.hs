@@ -1,6 +1,7 @@
 -- Solutions to the P-99 problems in Haskell
 import Data.List
 import System.Random
+
 --P01
 myLast :: [a] -> a
 myLast []     = error "empty list"
@@ -115,7 +116,13 @@ dropEveryNth n xs = [x | (i, x) <- zip [0..] xs, (i + 1) `mod` n /= 0]
 splitAt2 :: Int -> [a] -> ([a], [a])
 splitAt2 n xs = (take n xs, drop n xs)
 
---Do recursive as well
+--Using recursion
+splitAt3 :: Int -> [a] -> ([a], [a])
+splitAt3 n xs = if n < 0 then ([], xs) else splitR n xs []
+    where 
+        splitR 0 xs accum = (reverse accum, xs)
+        splitR _ [] accum = (reverse accum, [])
+        splitR n (x:xs) accum = splitR (n-1) xs (x : accum)
 
 --P18
 slice :: Eq a => Int -> Int -> [a] -> [a]
@@ -139,7 +146,7 @@ insertAt n xs e = let (start, end) = splitAt n xs in start ++ (e : end)
 range :: Int -> Int -> [Int]
 range a b = [a..b]
 
---P23
+P23
 randomIntGen :: Int -> Int -> IO [Int]
 randomIntGen lo hi = randomRs (lo,hi) <$> newStdGen
 
@@ -149,3 +156,5 @@ randSelect n xs =
        return $ (xs !!) <$> i
     where
         indices = take n <$> randomIntGen 0 (length xs - 1)
+
+
