@@ -146,7 +146,9 @@ insertAt n xs e = let (start, end) = splitAt n xs in start ++ (e : end)
 range :: Int -> Int -> [Int]
 range a b = [a..b]
 
-P23
+--P23
+-- Note: The use of nub is simple but inefficient. Especially for permuting 
+--       large lists.
 randomIntGen :: Int -> Int -> IO [Int]
 randomIntGen lo hi = randomRs (lo,hi) <$> newStdGen
 
@@ -155,6 +157,20 @@ randSelect n xs =
     do i <- indices
        return $ (xs !!) <$> i
     where
-        indices = take n <$> randomIntGen 0 (length xs - 1)
+        indices = take max . nub <$> randomIntGen 0 (length xs - 1)
+        max = min n (length xs)
 
+--P24
+lotto :: Int -> Int -> IO [Int]
+lotto n m = randSelect n [1..m]
 
+--P25
+permute :: Eq a => [a] -> IO [a]
+permute xs = let n = length xs in 
+    randSelect n xs
+
+--P26
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations size xs = [xs !! i : x | i <- [0..(length xs)-1],
+                                    x <- combinations (size-1) (drop (i+1) xs)]
