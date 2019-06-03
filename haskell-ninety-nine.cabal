@@ -1,0 +1,23 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 866a07a97d7bc4ff1acb996a6fac34bab688ba95519a444cbc5c9f3b7f011769
+
+name:           haskell-ninety-nine
+version:        0.0.1
+build-type:     Simple
+
+library
+  exposed-modules:
+      Problems
+  other-modules:
+      Paths_haskell_ninety_nine
+  hs-source-dirs:
+      src
+  build-depends:
+      base
+    , random
+  default-language: Haskell2010

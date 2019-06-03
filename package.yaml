@@ -1,0 +1,13 @@
+name: haskell-ninety-nine
+version: 0.0.1
+
+dependencies:
+  - base
+  - random
+
+library:
+  exposed-modules: Problems
+  source-dirs: src
+  # ghc-options: -Wall
+  dependencies:
+    - random    
